@@ -11,6 +11,7 @@ import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Collections;
@@ -37,8 +38,8 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         return 250;
     }
 
-    public void render(int int_1, int int_2, float float_1) {
-        this.renderBackground();
+    public void render(MatrixStack matrices, int int_1, int int_2, float float_1) {
+        this.renderBackground(matrices);
         int int_3 = this.getScrollbarPositionX();
         int int_4 = int_3 + 6;
         RenderSystem.disableLighting();
@@ -50,7 +51,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         int int_5 = this.getRowLeft();
         int int_6 = this.top + 4 - (int)this.getScrollAmount();
 
-        this.renderList(int_5, int_6, int_1, int_2, float_1);
+        this.renderList(matrices, int_5, int_6, int_1, int_2, float_1);
         RenderSystem.disableDepthTest();
         this.renderHoleBackground(0, this.top, 255, 255);
         this.renderHoleBackground(this.bottom, this.height, 255, 255);
@@ -94,7 +95,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
             tessellator_1.draw();
         }
 
-        this.renderDecorations(int_1, int_2);
+        this.renderDecorations(matrices, int_1, int_2);
         RenderSystem.enableTexture();
         RenderSystem.shadeModel(7424);
         RenderSystem.enableAlphaTest();
@@ -111,7 +112,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
             diskWriter.run();
     }
 
-    public void add(Entry entry) {
+    public void add(mcp.mobius.waila.gui.config.OptionsListWidget.Entry entry) {
         if (entry instanceof OptionsEntryValue) {
             Element element = ((OptionsEntryValue) entry).getListener();
             if (element != null)
@@ -120,7 +121,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         addEntry(entry);
     }
 
-    public abstract static class Entry extends ElementListWidget.Entry<Entry> {
+    public abstract static class Entry extends ElementListWidget.Entry<mcp.mobius.waila.gui.config.OptionsListWidget.Entry> {
 
         protected final MinecraftClient client;
 
@@ -134,6 +135,6 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         }
 
         @Override
-        public abstract void render(int index, int rowTop, int rowLeft, int width, int height, int mouseX, int mouseY, boolean hovered, float deltaTime);
+        public abstract void render(MatrixStack matrices, int index, int rowTop, int rowLeft, int width, int height, int mouseX, int mouseY, boolean hovered, float deltaTime);
     }
 }

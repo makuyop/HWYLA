@@ -5,6 +5,7 @@ import mcp.mobius.waila.api.ICommonAccessor;
 import mcp.mobius.waila.api.ITooltipRenderer;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 
@@ -20,7 +21,7 @@ public class TooltipRendererProgressBar implements ITooltipRenderer {
     }
 
     @Override
-    public void draw(CompoundTag tag, ICommonAccessor accessor, int x, int y) {
+    public void draw(MatrixStack matrices, CompoundTag tag, ICommonAccessor accessor, int x, int y) {
         int currentValue = tag.getInt("progress");
 
         MinecraftClient.getInstance().getTextureManager().bindTexture(SHEET);
